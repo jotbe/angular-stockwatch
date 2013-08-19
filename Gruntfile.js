@@ -73,7 +73,8 @@ module.exports = function (grunt) {
               mountFolder(connect, '.tmp'),
               mountFolder(connect, 'test')
             ];
-          }
+          },
+          port: 9001
         }
       },
       dist: {
