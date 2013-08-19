@@ -89,7 +89,7 @@ module.exports = function (grunt) {
     },
     open: {
       server: {
-        url: 'http://localhost:<%= connect.options.port %>'
+        url: 'http://<%= connect.options.hostname %>:<%= connect.options.port %>'
       }
     },
     clean: {
