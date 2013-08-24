@@ -1,22 +1,22 @@
 'use strict';
 
-describe('Controller: MainCtrl', function () {
+describe('Controller: WatchlistCtrl', function () {
 
   // load the controller's module
   beforeEach(module('stockwatchApp'));
 
-  var MainCtrl,
+  var WatchlistCtrl,
     scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    MainCtrl = $controller('MainCtrl', {
+    WatchlistCtrl = $controller('WatchlistCtrl', {
       $scope: scope
     });
   }));
 
-  it('should attach a list of awesomeThings to the scope', function () {
-    expect(scope.awesomeThings.length).toBe(3);
+  it('should attach a list of watchlists to the scope', function () {
+    expect(scope.watchlists.length).toBe(3);
   });
 });
