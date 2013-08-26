@@ -30,7 +30,11 @@
       </thead>
       <tbody>
         <tr ng-repeat="wl in watchlists">
-          <td>{{wl.id}}</td><td>{{wl.name}}</td><td>08/04/2013</td><td>14,32%</td><td>Bearbeiten | Löschen</td>
+          <td>{{wl.id}}</td><td>{{wl.name}}</td><td>08/04/2013</td><td>14,32%</td>
+          <td>
+            <button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-edit"></span></button>
+            <button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-trash"></span></button>
+          </td>
         </tr>
       </tbody>
     </table>
