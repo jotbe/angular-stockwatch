@@ -1,0 +1,35 @@
+<!-- Watchlist View -->
+<div class="row-fluid">
+  <div class="span12">
+    <h3>
+      Watchlists <button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus"></span></button>
+    </h3>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12 col-md-8">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>#</th><th>Name</th><th>Erstellt am</th><th>Kursgewinn</th><th>Aktionen</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="wl in watchlists">
+          <td>{{wl.id}}</td><td>{{wl.name}}</td><td>08/04/2013</td><td>14,32%</td>
+          <td>
+            <button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-edit"></span></button>
+            <button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-trash"></span></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-xs-6 col-md-4">
+    <form>
+      <fieldset class="form-group">
+         <legend>Legend</legend> <label>Label name</label><input type="text" class="form-control"> <span class="help-block">Example block-level help text here.</span> <label class="checkbox"><input type="checkbox"> Check me out</label> <button type="submit" class="btn btn-default">Submit</button>
+      </fieldset>
+    </form>
+  </div>
+</div>
