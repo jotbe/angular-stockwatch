@@ -16,7 +16,7 @@ describe('Controller: WatchlistCtrl', function () {
     });
   }));
 
-  it('should attach a list of awesomeThings to the scope', function () {
+  it('should attach a list of watchlists to the scope', function () {
     expect(scope.watchlists.length).toBe(3);
   });
 });

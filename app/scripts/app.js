@@ -3,11 +3,15 @@
 angular.module('stockwatchApp', [])
   .config(function ($routeProvider) {
     $routeProvider
-      .when('/', {
+      .when('/watchlist', {
         templateUrl: 'views/watchlist.html',
         controller: 'WatchlistCtrl'
       })
+      /*.when('/watchlist/:watchlistId', {
+        templateUrl: 'views/watchlist.html',
+        controller: 'WatchlistItemsCtrl'
+      })*/
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/watchlist'
       });
   });
