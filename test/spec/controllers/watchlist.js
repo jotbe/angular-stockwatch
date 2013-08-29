@@ -6,17 +6,21 @@ describe('Controller: WatchlistCtrl', function () {
   beforeEach(module('stockwatchApp'));
 
   var WatchlistCtrl,
-    scope;
+      scope,
+      _httpBackend;
 
-  // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope) {
-    scope = $rootScope.$new();
-    WatchlistCtrl = $controller('WatchlistCtrl', {
-      $scope: scope
-    });
-  }));
+  beforeEach(inject(function ($rootScope, $controller, $httpBackend, $http) {
+      scope = $rootScope.$new();
+      _httpBackend = $httpBackend;
+      _httpBackend.when('GET', 'data/watchlists.json').respond([{}, {}, {}]);
+      WatchlistCtrl = $controller('WatchlistCtrl', {
+          $scope: scope,
+          $http: $http
+        });
+    }));
 
   it('should attach a list of watchlists to the scope', function () {
+    _httpBackend.flush();
     expect(scope.watchlists.length).toBe(3);
   });
 });
