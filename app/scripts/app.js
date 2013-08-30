@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('stockwatchApp', [])
+angular.module('stockwatchApp', ['ngRoute'])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/watchlist', {
