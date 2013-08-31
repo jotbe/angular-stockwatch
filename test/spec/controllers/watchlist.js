@@ -2,18 +2,17 @@
 
 describe('Controller: WatchlistCtrl', function () {
 
-  // load the controller's module
-  beforeEach(module('stockwatchApp'));
+  beforeEach(module('stockwatchApp', 'mockedWatchlist'));
 
-  var WatchlistCtrl,
+  var ctrl,
       scope,
       _httpBackend;
 
-  beforeEach(inject(function ($rootScope, $controller, $httpBackend, $http) {
+  beforeEach(inject(function ($rootScope, $controller, $httpBackend, watchlistJSON, $http) {
       scope = $rootScope.$new();
       _httpBackend = $httpBackend;
-      _httpBackend.when('GET', 'data/watchlists.json').respond([{}, {}, {}]);
-      WatchlistCtrl = $controller('WatchlistCtrl', {
+      _httpBackend.when('GET', 'data/watchlists.json').respond(watchlistJSON);
+      ctrl = $controller('WatchlistCtrl', {
           $scope: scope,
           $http: $http
         });

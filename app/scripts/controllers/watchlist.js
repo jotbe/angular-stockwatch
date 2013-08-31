@@ -1,12 +1,8 @@
 'use strict';
 
 angular.module('stockwatchApp')
-  .controller('WatchlistCtrl', function ($scope, $http) {
-
-    $http.get('data/watchlists.json')
-         .then(function(response, status, config) {
-      $scope.watchlists = response.data;
-    });
+  .controller('WatchlistCtrl', ['$scope', 'Watchlist', function ($scope, Watchlist) {
+    $scope.watchlists = Watchlist.query();
 
     $scope.addWatchlist = function() {
       if (this.watchlistName) {
@@ -28,4 +24,4 @@ angular.module('stockwatchApp')
     };
 
 
-  });
+  }]);
