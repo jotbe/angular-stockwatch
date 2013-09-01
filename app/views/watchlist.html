@@ -14,7 +14,7 @@
       </thead>
       <tbody>
         <tr ng-repeat="wl in watchlists">
-          <td>{{wl.id}}</td><td>{{wl.name}}</td>
+          <td>{{wl.id}}</td><td><a href="#/watchlist/{{wl.id}}">{{wl.name}}</a></td>
           <td>{{wl.date_added | date:'shortDate'}}</td>
           <td>{{(wl.pl_percentage||0) | number:2}}%</td>
           <td>

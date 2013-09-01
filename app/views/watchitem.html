@@ -1,0 +1,32 @@
+<!-- Watchlist Items View -->
+<div class="row-fluid">
+  <div class="span12">
+    <h3><a href="#/watchlist">Watchlists</a>: {{watchlist.name}}</h3>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12 col-md-8">
+    <table class="table table-striped table-hover" id="watchlists">
+      <thead>
+        <tr>
+          <th>#</th><th>Name</th><th>Symbol</th><th>Kursveränderung</th><th>Aktionen</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="wi in watchlist.securities">
+          <td>{{wi.id}}</td><td>{{wi.name}}</td>
+          <td>{{wi.symbol}}</td>
+          <td>{{(5||0) | number:2}}%</td>
+          <td>
+            <button type="button" class="btn btn-default btn-xs">
+              <span class="glyphicon glyphicon-edit"></span>
+            </button>
+            <button type="button" class="btn btn-default btn-xs" ng-mouseup="deleteItem($index)">
+              <span class="glyphicon glyphicon-trash"></span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

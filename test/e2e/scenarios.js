@@ -29,4 +29,12 @@ describe('Stockwatch E2E Tests', function() {
         });
     });
 
+    describe('Open watchlist', function() {
+        it('should open "Watchlist 1"', function() {
+            element('#watchlists tbody a:first').click();
+            expect(browser().location().path()).toBe('/watchlist/1');
+            expect(element('#watchlists tr td:eq(2)').text()).toBe('GFT.DE');
+        });
+    });
+
 });

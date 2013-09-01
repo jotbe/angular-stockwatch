@@ -7,10 +7,10 @@ angular.module('stockwatchApp', ['ngRoute', 'stockwatchServices'])
         templateUrl: 'views/watchlist.html',
         controller: 'WatchlistCtrl'
       })
-      /*.when('/watchlist/:watchlistId', {
-        templateUrl: 'views/watchlist.html',
-        controller: 'WatchlistItemsCtrl'
-      })*/
+      .when('/watchlist/:watchlistId', {
+        templateUrl: 'views/watchitem.html',
+        controller: 'WatchitemCtrl'
+      })
       .otherwise({
         redirectTo: '/watchlist'
       });
