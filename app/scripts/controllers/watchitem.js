@@ -3,7 +3,6 @@
 angular.module('stockwatchApp')
   .controller('WatchitemCtrl', function ($scope, $routeParams, Watchlist) {
     $scope.$routeParams = $routeParams;
-    $scope.watchlist = {};
     var watchlists = Watchlist.query(function() {
       for (var wl in watchlists) {
         if (watchlists[wl].id === parseInt($routeParams.watchlistId, 10)) {

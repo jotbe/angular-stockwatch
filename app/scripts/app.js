@@ -11,7 +11,14 @@ angular.module('stockwatchApp', ['ngRoute', 'stockwatchServices'])
         templateUrl: 'views/watchitem.html',
         controller: 'WatchitemCtrl'
       })
-      .otherwise({
+      .when('/watchlist/:watchlistId/quote/:symbol', {
+        templateUrl: 'views/quote.html',
+        controller: 'QuoteCtrl'
+      })
+      .when('/quote/:symbol', {
+        templateUrl: 'views/quote.html',
+        controller: 'QuoteCtrl'
+      })      .otherwise({
         redirectTo: '/watchlist'
       });
   });

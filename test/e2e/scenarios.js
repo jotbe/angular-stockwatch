@@ -30,11 +30,24 @@ describe('Stockwatch E2E Tests', function() {
     });
 
     describe('Open watchlist', function() {
-        it('should open "Watchlist 1"', function() {
+        it('should open the first watchlist', function() {
             element('#watchlists tbody a:first').click();
             expect(browser().location().path()).toBe('/watchlist/1');
-            expect(element('#watchlists tr td:eq(2)').text()).toBe('GFT.DE');
+            expect(element('#watchlist tr td:eq(2)').text()).toBe('GFT.DE');
         });
     });
 
+    describe('Open stock quote', function() {
+        it('should a stock quote from within a watchlist', function() {
+            browser().navigateTo('#/watchlist/1');
+            expect(browser().location().path()).toBe('/watchlist/1');
+            element('#watchlist tbody a:first').click();
+            expect(element('h3:eq(0)').text()).toBe('Aktuelle Kursdaten');
+        });
+        it('should open the first item in the watchlist', function() {
+            browser().navigateTo('#/quote/GFT.DE');
+            expect(browser().location().path()).toBe('/quote/GFT.DE');
+            expect(element('h3:eq(0)').text()).toBe('Aktuelle Kursdaten');
+        });
+    });
 });

@@ -1,0 +1,98 @@
+<!-- Quote View -->
+<div class="row-fluid">
+  <div class="span12" ng-if="watchlist.id">
+    <ol class="breadcrumb">
+      <li><a href="#/watchlist">Watchlists</a></li>
+      <li><a href="#/watchlist/{{watchlist.id}}">{{watchlist.name}}</a></li>
+      <li class="active">{{quote.Name}}</li>
+    </ol>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12 col-md-8">
+    <div class="stock info">
+      <h2>{{quote.Name}} ({{quote.symbol}})</h2>
+      <span class="stock current">{{quote.LastTradePriceOnly}}</span>
+       <span class="stock change">({{quote.Change}})</span>
+       <span class="stock exchange">{{quote.StockExchange}}</span>
+    </div>
+  </div>
+</div><!-- /row -->
+
+<div class="row">
+  <div class="col-xs-12 col-md-8">
+
+    <h3>Aktuelle Kursdaten</h3>
+
+    <table class="table table-striped table-hover" id="quote">
+      <tbody>
+        <tr>
+          <th scope="row">Tageshoch</th>
+          <td>{{quote.DaysHigh}}</td>
+          <th scope="row">Jahreshoch</th>
+          <td>{{quote.YearHigh}}</td>
+        </tr>
+        <tr>
+          <th scope="row">Tagestief</th>
+          <td>{{quote.DaysLow}}</td>
+          <th scope="row">Jahrestief</th>
+          <td>{{quote.YearLow}}</td>
+        </tr>
+        <tr>
+          <th scope="row">Volumen</th>
+          <td>{{quote.Volume}}</td>
+          <th scope="row">Markt-Kap.</th>
+          <td>{{quote.MarketCapitalization}}</td>
+        </tr>
+        <tr>
+          <th scope="row">&Oslash;-Volumen (3 Mon.)</th>
+          <td>{{quote.AverageDailyVolume}}</td>
+          <th scope="row">Volumen</th>
+          <td>{{quote.Volume}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- /row -->
+
+<div class="row">
+  <div class="col-xs-12 col-md-8">
+
+    <h3>Historische Kursdaten</h3>
+
+    <table class="table table-striped table-hover" id="histQuote">
+      <thead>
+        <th>Datum</th>
+        <th>Eröffnung</th>
+        <th>Hoch</th>
+        <th>Tief</th>
+        <th>Schluss</th>
+        <th>Volumen</th>
+        <th>Adj_Close</th>
+      </thead>
+      <tbody ng-repeat="hq in histQuotes">
+        <td>{{hq.Date}}</td>
+        <td>{{hq.Open}}</td>
+        <td>{{hq.High}}</td>
+        <td>{{hq.Low}}</td>
+        <td>{{hq.Close}}</td>
+        <td>{{hq.Volume}}</td>
+        <td>{{hq.Adj_Close}}</td>
+      </tbody>
+    </table>
+    <div>
+      <pre>
+        $scope.yqlQuoteErrData: {{yqlQuoteErrData}}
+        $scope.yqlQuoteStatus: {{yqlQuoteStatus}}
+        $scope.quote: {{quote}}
+      </pre>
+    </div>
+    <div>
+      <pre>
+        $scope.yqlHistErrData: {{yqlHistErrData}}
+        $scope.yqlHistStatus: {{yqlHistStatus}}
+        $scope.histQuotes: {{histQuotes}}
+      </pre>
+    </div>
+  </div>
+</div>
