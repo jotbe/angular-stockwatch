@@ -8,13 +8,12 @@ describe('Controller: WatchlistCtrl', function () {
       scope,
       _httpBackend;
 
-  beforeEach(inject(function ($rootScope, $controller, $httpBackend, watchlistJSON, $http) {
+  beforeEach(inject(function ($rootScope, $controller, $httpBackend, watchlistJSON) {
       scope = $rootScope.$new();
       _httpBackend = $httpBackend;
       _httpBackend.when('GET', 'data/watchlists.json').respond(watchlistJSON);
       ctrl = $controller('WatchlistCtrl', {
-          $scope: scope,
-          $http: $http
+          $scope: scope
         });
     }));
 
