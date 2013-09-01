@@ -1,16 +1,21 @@
 'use strict';
 
-// TODO: Write Service test
 describe('Service: stockwatchServices', function () {
-  // load the service's module
-  beforeEach(module('stockwatchApp'));
+  var $httpBackend, Watchlist;
 
-  beforeEach(inject(function () {
+  beforeEach(module('stockwatchServices', 'mockedWatchlist'));
 
-    }));
+  beforeEach(inject(function ($injector) {
+    $httpBackend = $injector.get('$httpBackend');
+    var watchlistJSON = $injector.get('watchlistJSON');
+    $httpBackend.when('GET', 'data/watchlists.json').respond(watchlistJSON);
+    Watchlist = $injector.get('Watchlist');
+  }));
 
-  it('should do something', function () {
-
-  });
+  it('should get 3 items', inject(function (Watchlist) {
+    var watchlist = Watchlist.query();
+    $httpBackend.flush();
+    expect(watchlist.length).toBe(3);
+  }));
 
 });
