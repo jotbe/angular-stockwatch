@@ -82,8 +82,35 @@ angular.module('mockedWatchlist', [])
       }
     ]
   )
+  .value('quoteJSON',
+    {
+      "query": {
+        "count": 1,
+        "created": "2013-09-03T08:31:49Z",
+        "lang": "en-US",
+        "results": {
+          "quote": {
+            "symbol": "GFT.DE",
+            "AverageDailyVolume": "76180",
+            "Change": "+0.063",
+            "DaysLow": "5.13",
+            "DaysHigh": "5.18",
+            "YearLow": "2.82",
+            "YearHigh": "5.486",
+            "MarketCapitalization": "136.2M",
+            "LastTradePriceOnly": "5.173",
+            "DaysRange": "5.13 - 5.18",
+            "Name": "GFT TECHNOLOGIES",
+            "Symbol": "GFT.DE",
+            "Volume": "3350",
+            "StockExchange": "XETRA"
+          }
+        }
+      }
+    }
+  )
   .value('historicalQuotesJSON',
-    /*http://query.yahooapis.com/v1/public/yql?q=use%20'https%3A%2F%2Fgist.github.com%2Fjotbe%2F3f35ceb0f3496c3e2869%2Fraw'%20as%20stockhist%3B%20select%20*%20from%20stockhist%20where%20symbol%20%3D%20%22GFT.DE%22%20and%20startDate%20%3D%20%222013-01-01%22%20and%20endDate%20%3D%20%222013-07-31%22&format=json&diagnostics=false&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys*/
+    /*http://query.yahooapis.com/v1/public/yql?q=use%20'https%3A%2F%2Fgist.github.com%2Fjotbe%2F3f35ceb0f3496c3e2869%2Fraw'%20as%20stockhist%3B%20select%20*%20from%20stockhist%20where%20symbol%20%3D%20%22GFT.DE%22%20and%20startDate%20%3D%20%222013-01-01%22%20and%20endDate%20%3D%20%222013-07-31%22&format=json&diagnostics=false&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=JSON_CALLBACK*/
     {
       "query": {
         "count": 152,
