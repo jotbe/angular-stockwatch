@@ -18,7 +18,7 @@ angular.module('stockwatchServices', ['ngResource'])
     function executeQuery(queryUrl, deferObj) {
       $http.jsonp(queryUrl)
         .success(function(data) {
-          var result = data.query.results.quote;
+          var result = data.query.results;
           deferObj.resolve(result);
         })
         .error(function(data, status) {
@@ -27,6 +27,31 @@ angular.module('stockwatchServices', ['ngResource'])
     }
 
     return {
+
+      getSymbol: function(str) {
+        var deferred = $q.defer();
+
+        /***
+         *  SELECT * FROM yahoo.finance.quote
+         *  WHERE symbol = "GFT.DE";
+         *
+         *  REST-Query:
+         *  http://query.yahooapis.com/v1/public/yql?q=
+         *  USE%20%22https%3A%2F%2Fgist.github.com%2Fjotbe%2Fee2bd20184b936a5a731%2Fraw%22%20AS%20symbol%3B%20
+         *  SELECT%20*%20FROM%20symbol%20WHERE%20symbol%20%3D%20%22post%22
+         *  &format=json&callback=JSON_CALLBACK
+         */
+        var yqlQuery = [
+          'USE "https://gist.github.com/jotbe/ee2bd20184b936a5a731/raw" AS symbol;',
+          'SELECT * FROM symbol WHERE symbol = "' + encodeURIComponent(str) + '"'
+        ];
+
+        var query = buildQuery(yqlQuery);
+        // console.log('Executing Query:', query);
+        executeQuery(query, deferred);
+
+        return deferred.promise;
+      },
 
       getQuote: function(sym) {
         var deferred = $q.defer();

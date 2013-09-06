@@ -6,10 +6,14 @@ angular.module('stockwatchApp')
 
     $scope.symbol = $routeParams.symbol;
 
-    var promiseQuote = YqlQuotes.getQuote($routeParams.symbol);
-    promiseQuote.then(function(data){
-      $scope.quote = data;
-    });
+    var fetchQuote = (function(sym) {
+          var promiseQuote = YqlQuotes.getQuote(sym);
+          promiseQuote.then(function(data){
+            $scope.quote = data.quote;
+          });
+        })($scope.symbol);
+
+    $scope.fetchQuote = fetchQuote;
 
     var currentDate = new Date();
     var startDate = new Date(currentDate);
@@ -19,6 +23,7 @@ angular.module('stockwatchApp')
 
     var promiseHistorical = YqlQuotes.getHistoricalQuotes($routeParams.symbol, startDateString, currentDateString);
     promiseHistorical.then(function(data) {
-      $scope.histQuotes = data;
+      $scope.histQuotes = data.quote;
     });
+
   });

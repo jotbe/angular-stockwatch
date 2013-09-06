@@ -14,73 +14,58 @@ angular.module('mockedWatchlist', [])
       { "id": 3, "name": "Watchlist 3", "date_added": "1376956800000"  }
     ]
   )
-  .value('stockinfoJSON',
-    /* curl -L "http://query.yahooapis.com/v1/public/yql?q=use%20'https%3A%2F%2Fgist.github.com%2Fjotbe%2F36245986f6fa00a0cfac%2Fraw'%20as%20mytable%3B%20select%20*%20from%20mytable%20where%20symbol%3D'GFT.DE'&format=json&diagnostics=false&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys" */
-    [
-      {
-        "query": {
-          "count": 1,
-          "created": "2013-08-28T06:37:58Z",
-          "lang": "en-US",
-          "results": {
-            "stock": {
-              "symbol": "TSLA",
-              "CompanyName": "Tesla Motors, Inc. (TSLA)",
-              "StartDate": "2010-06-29",
-              "EndDate": "2013-08-28",
-              "Indexes": {
-                "Index": {
-                  "symbol": "^NDX",
-                  "content": "Nasdaq 100"
-                }
+  .value('symbolJSON',
+    /* http://query.yahooapis.com/v1/public/yql?q=USE%20%22https%3A%2F%2Fgist.github.com%2Fjotbe%2Fee2bd20184b936a5a731%2Fraw%22%20AS%20symbol%3B%20SELECT%20*%20FROM%20symbol%20WHERE%20symbol%20%3D%20%22post%22&format=json */
+    {
+      "query": {
+        "count": 1,
+        "created": "2013-09-06T20:11:40Z",
+        "lang": "en-US",
+        "results": {
+          "stock": {
+            "symbol": "post",
+            "item": [
+              {
+                "symbol": "PPS",
+                "name": "Post Properties Inc.",
+                "type": "Stock",
+                "exchange": "NYQ"
               },
-              "Sector": "Consumer Goods",
-              "Industry": "Auto Manufacturers - Major",
-              "FullTimeEmployees": "2964",
-              "Executives": null
-            }
-          }
-        }
-      },
-      {
-        "query": {
-          "count": 1,
-          "created": "2013-08-28T06:38:30Z",
-          "lang": "en-US",
-          "results": {
-            "stock": {
-              "symbol": "BC8.DE",
-              "CompanyName": "Bechtle AG (BC8.DE)",
-              "StartDate": "2000-03-30",
-              "EndDate": "2013-08-28",
-              "Indexes": null,
-              "Sector": "Technology",
-              "Industry": "Information Technology Services",
-              "FullTimeEmployees": "6053",
-              "Executives": null
-            }
-          }
-        }
-      },
-      {
-        "query": {
-          "count": 1,
-          "created": "2013-08-28T06:38:52Z",
-          "lang": "en-US",
-          "results": {
-            "stock": {
-              "symbol": "GFT.DE",
-              "CompanyName": "GFT Technologies AG (GFT.DE)",
-              "Indexes": null,
-              "Sector": "Technology",
-              "Industry": "Information Technology Services",
-              "FullTimeEmployees": "1503",
-              "Executives": null
-            }
+              {
+                "symbol": "WPO",
+                "name": "The Washington Post Company",
+                "type": "Stock",
+                "exchange": "NYQ"
+              },
+              {
+                "symbol": "DPW.DE",
+                "name": "Deutsche Post AG",
+                "type": "Stock",
+                "exchange": "GER"
+              },
+              {
+                "symbol": "PSTR",
+                "name": "PostRock Energy Corporation",
+                "type": "Stock",
+                "exchange": "NGM"
+              },
+              {
+                "symbol": "POST",
+                "name": "Post Holdings, Inc.",
+                "type": "Stock",
+                "exchange": "NYQ"
+              },
+              {
+                "symbol": "DPB.DE",
+                "name": "Deutsche Postbank AG",
+                "type": "Stock",
+                "exchange": "GER"
+              }
+            ]
           }
         }
       }
-    ]
+    }
   )
   .value('quoteJSON',
     {
