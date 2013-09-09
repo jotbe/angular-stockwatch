@@ -1,8 +1,11 @@
 'use strict';
 
 angular.module('stockwatchApp')
-  .controller('QuoteCtrl', function ($scope, $routeParams, $http, $injector, YqlQuotes) {
-    $injector.invoke(function ($controller) { $controller('WatchitemCtrl', {'$scope': $scope}); });
+  .controller('QuoteCtrl', function($scope, $routeParams, $injector, YqlQuotes, WatchlistStorage) {
+    var storage = WatchlistStorage.open();
+    storage.then(function() {
+      $scope.targetWatchlists = WatchlistStorage.getItems();
+    });
 
     $scope.symbol = $routeParams.symbol;
 
@@ -25,5 +28,12 @@ angular.module('stockwatchApp')
     promiseHistorical.then(function(data) {
       $scope.histQuotes = data.quote;
     });
+
+    $scope.addSymbolToWatchlist = function() {
+      console.log('Adding symbol to Watchlist:',
+        [this.targetWatchlist.name, this.targetWatchlist.id, $scope.quote]);
+      $injector.invoke(function($controller) { $controller('WatchlistCtrl', {'$scope': $scope}); });
+      $scope.$emit('AddQuoteToWatchList');
+    };
 
   });

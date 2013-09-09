@@ -12,9 +12,24 @@
   <div class="col-xs-12 col-md-8">
     <div class="stock info">
       <h2>{{quote.Name}} ({{quote.symbol}})</h2>
-      <span class="stock current">{{quote.LastTradePriceOnly}}</span>
-       <span class="stock change">({{quote.Change}})</span>
-       <span class="stock exchange">{{quote.StockExchange}}</span>
+      <div class="row">
+        <div class="col-md-8">
+          <span class="stock current">{{quote.LastTradePriceOnly}}</span>
+           <span class="stock change">({{quote.Change}})</span>
+           <span class="stock exchange">{{quote.StockExchange}}</span>
+        </div>
+        <div class="col-md-4">
+           <form role="form" ng-submit="addSymbolToWatchlist()">
+            <span class="form-group">
+              <label class="hidden" for="targetWatchlist">Zur Watchlist</label>
+              <select id="targetWatchlist" ng-model="targetWatchlist" ng-options="wl.name for wl in targetWatchlists">
+                 <option value="">Watchlist ...</option>
+              </select>
+              <button type="submit" class="btn btn-xs">Hinzufügen</button>
+            </span>
+          </form>
+        </div>
+      </div><!-- /row -->
     </div>
   </div>
 </div><!-- /row -->

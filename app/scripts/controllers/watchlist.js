@@ -71,4 +71,59 @@ angular.module('stockwatchApp')
           return WatchlistStorage.addItem(watchlist);
         });
     };
+
+    var addQuoteToWatchList = function(watchlistId, quote) {
+      console.log('Adding symbol to watchlist');
+      storage
+        .then(function() {
+          return WatchlistStorage.getItem(watchlistId);
+        })
+        .then(function(item) {
+          function findSecurityBySymbol(sym) {
+            console.log('Searching symbol in securities');
+            for(var i in item.securities) {
+              if (item.securities[i].symbol === sym) {
+                console.log('Already in watchlist.');
+                return i;
+              }
+            }
+          }
+          console.log('Found item:', item, item.securities);
+
+          if (typeof(item.securities) === 'undefined') {
+            item.securities = [];
+          }
+
+          if (angular.isArray(item.securities)) {
+            if (!findSecurityBySymbol(quote.symbol)) {
+              var symbolRecord = {
+                'id': item.securities.length + 1,
+                'name': quote.Name,
+                'symbol': quote.Symbol,
+                'date_added': new Date().getTime()
+              };
+
+              item.securities.push(symbolRecord);
+
+              console.log('Storing item', item);
+              return WatchlistStorage.addItem(item);
+            }
+          } else {
+            return false;
+          }
+        })
+        .then(function() {
+          console.log('Added symbol');
+        }, function() {
+          console.log('An error occurred when trying to add a new symbol.');
+        });
+    };
+
+    // Subscribe event
+    $scope.$on('AddQuoteToWatchList', function(e) {
+      e.stopPropagation();
+      console.log('Received event AddQuoteToWatchList:', e);
+      addQuoteToWatchList(e.targetScope.targetWatchlist.id, e.targetScope.quote);
+    });
+
   }]);
