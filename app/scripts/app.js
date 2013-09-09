@@ -9,7 +9,7 @@ angular.module('stockwatchApp', ['ngRoute', 'stockwatchServices'])
       })
       .when('/watchlist/:watchlistId', {
         templateUrl: 'views/watchitem.html',
-        controller: 'WatchitemCtrl'
+        controller: 'WatchlistCtrl'
       })
       .when('/watchlist/:watchlistId/quote/:symbol', {
         templateUrl: 'views/quote.html',

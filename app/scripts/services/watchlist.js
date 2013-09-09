@@ -7,6 +7,144 @@ angular.module('stockwatchServices', ['ngResource'])
       query: {method: 'GET', params: {}, isArray: true}
     });
   }])
+  .factory('WatchlistStorage', function($q, $rootScope) {
+    var storage;
+    var scope = $rootScope;
+
+    var open = function() {
+      var deferred = $q.defer();
+      storage = new IDBStore({
+        dbVersion: 1,
+        storeName: 'stockwatch',
+        keyPath: 'id',
+        autoIncrement: true,
+        onStoreReady: function(){
+          console.log('Stockwatch storage ready!');
+          scope.$apply(function(){
+            deferred.resolve(storage);
+          });
+        },
+        onError: function(err) {
+          console.log('Error opening the database!');
+          scope.$apply(function() {
+            deferred.reject(err);
+          });
+        }
+      });
+      return deferred.promise;
+    };
+
+    function getAll() {
+      var deferred = $q.defer();
+
+      function onGetAllSuccess(data) {
+        console.log('getAllSuccess: ', data);
+        scope.$apply(function() {
+          deferred.resolve(data);
+        });
+      }
+
+      function onError(err) {
+        console.log('Storage error: ', err);
+        scope.$apply(function() {
+          deferred.reject(err);
+        });
+      }
+
+      console.log('Getting all records');
+      storage.getAll(onGetAllSuccess, onError);
+
+      return deferred.promise;
+    }
+
+    function getItem(id) {
+      var deferred = $q.defer();
+
+      function onGetSuccess(data) {
+        console.log('getSuccess: ', data);
+        scope.$apply(function() {
+          deferred.resolve(data);
+        });
+      }
+
+      function onError(err) {
+        console.log('Storage error: ', err);
+        scope.$apply(function() {
+          deferred.reject(err);
+        });
+      }
+
+      console.log('Getting record:', id);
+      storage.get(parseInt(id, 10), onGetSuccess, onError);
+
+      return deferred.promise;
+    }
+
+    function addItem(item) {
+      var deferred = $q.defer();
+
+      function onPutSuccess(id) {
+        console.log('putSuccess: ', id);
+        scope.$apply(function() {
+          deferred.resolve(id);
+        });
+      }
+
+      function onError(err) {
+        console.log('Storage error: ', err);
+        scope.$apply(function() {
+          deferred.reject(err);
+        });
+      }
+
+      console.log('Storing item: ', item);
+      storage.put(item, onPutSuccess, onError);
+
+      return deferred.promise;
+    }
+
+    function deleteItem(id) {
+      var deferred = $q.defer();
+
+      function onDeleteSuccess(id) {
+        console.log('removeSuccess: ', id);
+        scope.$apply(function() {
+          deferred.resolve(id);
+        });
+      }
+
+      function onError(err) {
+        console.log('Storage error: ', err);
+        scope.$apply(function() {
+          deferred.reject(err);
+        });
+      }
+
+      console.log('Deleting item: ', id);
+      storage.remove(id, onDeleteSuccess, onError);
+
+      return deferred.promise;
+    }
+
+    return {
+      open: function() {
+        return open();
+      },
+      getItems: function() {
+        return getAll();
+      },
+      getItem: function(id) {
+        return getItem(id);
+      },
+      addItem: function(item) {
+        return addItem(item);
+      },
+      deleteItem: function(id) {
+        // In live environments this should require a confirmation.
+        return deleteItem(id);
+      }
+    };
+  })
   .factory('YqlQuotes', ['$q', '$http', function($q, $http) {
     var yqlQueryUrl = 'http://query.yahooapis.com/v1/public/yql?q=';
     var yqlOptions = '&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=JSON_CALLBACK';

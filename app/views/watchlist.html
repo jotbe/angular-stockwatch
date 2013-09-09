@@ -26,10 +26,10 @@
           <td>{{wl.date_added | date:'shortDate'}}</td>
           <td>{{(wl.pl_percentage||0) | number:2}}%</td>
           <td>
-            <button type="button" class="btn btn-default btn-xs">
+            <button type="button" class="btn btn-default btn-xs edit">
               <span class="glyphicon glyphicon-edit"></span>
             </button>
-            <button type="button" class="btn btn-default btn-xs" ng-mouseup="deleteWatchlist($index)">
+            <button type="button" class="btn btn-default btn-xs delete" ng-mouseup="deleteWatchlist({{wl.id}})">
               <span class="glyphicon glyphicon-trash"></span>
             </button>
           </td>
