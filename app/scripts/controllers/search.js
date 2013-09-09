@@ -10,7 +10,7 @@ angular.module('stockwatchApp')
     // TODO: Transform search into a custom directive.
     $document.mouseup(function(event){
       var resContainer = angular.element('#searchResult');
-      if (resContainer.is(':visible') && $(event.target).parents('#searchResult').length === 0) {
+      if (resContainer.is(':visible') && angular.element(event.target).parents('#searchResult').length === 0) {
         $scope.noSearchResult = true;
         $scope.$apply();
       }
@@ -25,6 +25,7 @@ angular.module('stockwatchApp')
           if (!data.stock.hasOwnProperty('item')) {
             console.log('No item found for search string:', searchStr);
             $scope.noSearchResult = true;
+            return;
           } else{
             $scope.noSearchResult = false;
           }
