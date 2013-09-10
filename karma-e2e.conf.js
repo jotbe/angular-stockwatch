@@ -18,6 +18,7 @@ module.exports = function(config) {
       'app/bower_components/angular-route/angular-*.js',
       'app/bower_components/angular-mocks/angular-*.js',
       'app/bower_components/angular-resource/angular-*.js',
+      'app/bower_components/highcharts-ng/src/directives/highcharts-ng.js',
       'app/scripts/*.js',
       'app/scripts/**/*.js',
       'test/e2e/*.js'
@@ -58,7 +59,7 @@ module.exports = function(config) {
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: ['PhantomJS'],
+    browsers: ['Chrome'],
 
 
     // If browser does not capture in given timeout [ms], kill it

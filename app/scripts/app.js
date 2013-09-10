@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('stockwatchApp', ['ngRoute', 'stockwatchServices'])
+angular.module('stockwatchApp', ['ngRoute', 'stockwatchServices', 'highcharts-ng'])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/watchlist', {
