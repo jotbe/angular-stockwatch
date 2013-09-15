@@ -181,7 +181,7 @@ angular.module('stockwatchServices', ['ngResource'])
          */
         var yqlQuery = [
           'USE "https://gist.github.com/jotbe/ee2bd20184b936a5a731/raw" AS symbol;',
-          'SELECT * FROM symbol WHERE symbol = "' + encodeURIComponent(str) + '"'
+          'SELECT * FROM symbol WHERE symbol = "' + str + '"'
         ];
 
         var query = buildQuery(yqlQuery);
@@ -191,7 +191,11 @@ angular.module('stockwatchServices', ['ngResource'])
         return deferred.promise;
       },
 
-      getQuote: function(sym) {
+      getQuotes: function(syms) {
+        if (typeof(syms) === 'string') {
+          syms = [syms];
+        }
+        var symbols = syms.join('","');
         var deferred = $q.defer();
 
         /***
@@ -200,13 +204,13 @@ angular.module('stockwatchServices', ['ngResource'])
          *
          *  REST-Query:
          *  http://query.yahooapis.com/v1/public/yql?q=
-         *  SELECT%20*%20FROM%20yahoo.finance.quote%20WHERE%20symbol%20%3D%20%22GFT.DE%22
+         *  SELECT%20*%20FROM%20yahoo.finance.quote%20WHERE%20symbol%20IN%20(%22GFT.DE%22)
          *  &format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys
          *  &callback=JSON_CALLBACK
          */
         var yqlQuery = [
           'SELECT * FROM yahoo.finance.quote',
-          'WHERE symbol = "' + sym + '"'
+          'WHERE symbol IN ("' + symbols + '")'
         ];
 
         var query = buildQuery(yqlQuery);

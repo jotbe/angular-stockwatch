@@ -13,11 +13,11 @@ angular.module('stockwatchApp')
 
     // Fetch current quote
     var fetchQuote = (function(sym) {
-          var promiseQuote = YqlQuotes.getQuote(sym);
-          promiseQuote.then(function(data){
-            $scope.quote = data.quote;
-          });
-        })(symbol);
+      var promiseQuote = YqlQuotes.getQuotes(sym);
+      promiseQuote.then(function(data){
+        $scope.quote = data.quote;
+      });
+    })(symbol);
 
     $scope.fetchQuote = fetchQuote;
 
@@ -141,8 +141,7 @@ angular.module('stockwatchApp')
             }
           }]
         };
-
-    });
+      });
 
     $scope.addSymbolToWatchlist = function() {
       console.log('Adding symbol to Watchlist:',

@@ -1,25 +1,102 @@
 'use strict';
 
 angular.module('stockwatchApp')
-  .controller('WatchlistCtrl', ['$scope', '$routeParams', 'WatchlistStorage', function ($scope, $routeParams, WatchlistStorage) {
-
+  .controller('WatchlistCtrl', ['$scope', '$routeParams', 'YqlQuotes', 'WatchlistStorage', function ($scope, $routeParams, YqlQuotes, WatchlistStorage) {
     var storage = WatchlistStorage.open();
+
+    // Requests quote information for the securities and updates them.
+    var updateSecurities = function(data) {
+      if (!data.hasOwnProperty('securities')) {
+        return;
+      }
+      var symbols = [];
+      var sec = data.securities;
+
+      for (var i in sec) {
+        symbols.push(sec[i].symbol);
+      }
+
+      console.log('watchlist:', symbols);
+
+      var promiseQuotes = YqlQuotes.getQuotes(symbols);
+      promiseQuotes
+        .then(function(quotesData) {
+          console.log(quotesData.quote);
+
+          var quotes = {};
+          for (var i in quotesData.quote) {
+            quotes[quotesData.quote[i].symbol] = quotesData.quote[i];
+          }
+
+          var tradePriceTotal = 0,
+              lastTradePriceTotal = 0,
+              changeTotal = 0,
+              changeDayTotal = 0,
+              changeDayTotalPercent = 0;
+
+          data.trade_price_total = 0;
+          data.last_trade_price_total = 0;
+          data.change_total = 0;
+          data.change_total_percent = 0;
+          data.change_day_total = 0;
+          data.change_day_total_percent = 0;
+
+          for (var i in sec) {
+            if (quotes.hasOwnProperty(sec[i].symbol)) {
+              var quote = quotes[sec[i].symbol];
+              var change = parseFloat(quote.Change.replace('+', '')),
+                  lastTradePrice = parseFloat(quote.LastTradePriceOnly);
+
+              sec[i].last_trade_price = lastTradePrice;
+              sec[i].change_total_percent = (sec[i].last_trade_price - sec[i].trade_price) / sec[i].trade_price * 100;
+              sec[i].change = change;
+              sec[i].change_percent = change / (lastTradePrice - change) * 100;
+              changeDayTotal += change;
+              tradePriceTotal += sec[i].trade_price;
+              lastTradePriceTotal += lastTradePrice;
+            }
+          }
+
+          changeTotal = (lastTradePriceTotal - tradePriceTotal);
+          data.change_total = changeTotal;
+          data.change_total_percent = changeTotal / tradePriceTotal * 100;
+          data.change_day_total = changeDayTotal;
+          data.change_day_total_percent = changeDayTotal / (tradePriceTotal - changeDayTotal) * 100;
+        });
+
+      console.log('Updated:', data);
+      return data;
+    };
 
     if ($routeParams.watchlistId) {
       var watchlistId = $routeParams.watchlistId;
-      console.log('Got watchlistId:', watchlistId);
 
       storage
         .then(function() {
-          WatchlistStorage.getItem(watchlistId)
-            .then(function(result) {
-              $scope.watchlist = result;
-            });
+          return WatchlistStorage.getItem(watchlistId);
+        })
+        .then(function(data) {
+          return updateSecurities(data);
+        })
+        .then(function(data) {
+          $scope.watchlist = data;
+          $scope.securities = data.securities;
         });
+
     } else {
       // default
       storage.then(function() {
-        $scope.watchlists = WatchlistStorage.getItems();
+        return WatchlistStorage.getItems();
+      })
+      .then(function(data) {
+        var watchlists = data;
+
+        for (var i in watchlists) {
+          watchlists[i] = updateSecurities(watchlists[i]);
+        }
+
+        console.log("Updated watchlists:", watchlists);
+        $scope.watchlists = watchlists;
       });
     }
 
@@ -34,11 +111,10 @@ angular.module('stockwatchApp')
             return WatchlistStorage.addItem({
               'name': name,
               'date_added': dateAdded,
-              'pl_percentage': 0.00,
               'securities': [
-                { 'id': 1, 'name': 'GFT Technologies AG', 'symbol': 'GFT.DE' },
-                { 'id': 2, 'name': 'Bechtle AG', 'symbol': 'BC8.DE' },
-                { 'id': 3, 'name': 'Tesla Motors, Inc.', 'symbol': 'TSLA' }
+                { 'id': 1, 'name': 'GFT Technologies AG', 'symbol': 'GFT.DE', 'date_added': 1376092800000, 'trade_price': 5.18 },
+                { 'id': 2, 'name': 'Bechtle AG', 'symbol': 'BC8.DE', 'date_added': 1376352000000, 'trade_price': 37.74 },
+                { 'id': 3, 'name': 'Tesla Motors, Inc.', 'symbol': 'TSLA', 'date_added': 1375574400000, 'trade_price': 144.68 }
               ]
             });
           })
@@ -51,7 +127,7 @@ angular.module('stockwatchApp')
     };
 
     $scope.deleteWatchlist = function(id) {
-      console.log('delete', storage);
+      console.log('deleting', storage);
 
       storage
         .then(function() {
@@ -100,7 +176,8 @@ angular.module('stockwatchApp')
                 'id': item.securities.length + 1,
                 'name': quote.Name,
                 'symbol': quote.Symbol,
-                'date_added': new Date().getTime()
+                'date_added': new Date().getTime(),
+                'trade_price': parseFloat(quote.LastTradePriceOnly)
               };
 
               item.securities.push(symbolRecord);

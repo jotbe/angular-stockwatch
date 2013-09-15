@@ -29,7 +29,7 @@ describe('Service: stockwatchServices: YqlQuotes', function () {
     $httpBackend = $injector.get('$httpBackend');
 
     var quoteJSON = $injector.get('quoteJSON');
-    var queryQuoteUrl = 'http://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20yahoo.finance.quote%20WHERE%20symbol%20%3D%20%22GFT.DE%22&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=JSON_CALLBACK';
+    var queryQuoteUrl = 'http://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20yahoo.finance.quote%20WHERE%20symbol%20IN%20(%22GFT.DE%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=JSON_CALLBACK';
     $httpBackend.when('JSONP', queryQuoteUrl)
       .respond(quoteJSON);
 
@@ -45,8 +45,19 @@ describe('Service: stockwatchServices: YqlQuotes', function () {
 
   }));
 
-  it('should request a quote', inject(function ($rootScope, YqlQuotes) {
-    var promise = YqlQuotes.getQuote('GFT.DE');
+  it('should request a quote passed as a string', inject(function ($rootScope, YqlQuotes) {
+    var promise = YqlQuotes.getQuotes('GFT.DE');
+    var res;
+    $httpBackend.flush();
+    promise.then(function(data) {
+      res = data.quote;
+    });
+    $rootScope.$apply();
+    expect(res.symbol).toEqual('GFT.DE');
+  }));
+
+  it('should request a quote passed as an array', inject(function ($rootScope, YqlQuotes) {
+    var promise = YqlQuotes.getQuotes(['GFT.DE']);
     var res;
     $httpBackend.flush();
     promise.then(function(data) {

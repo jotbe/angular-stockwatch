@@ -17,14 +17,21 @@
     <table class="table table-striped table-hover" id="watchlists">
       <thead>
         <tr>
-          <th>#</th><th>Name</th><th>Erstellt am</th><th>Kursveränderung</th><th>Aktionen</th>
+          <th>#</th><th>Name</th><th>Erstellt am</th><th>Veränderung<br>gesamt</th><th>Veränderung<br>heute</th><th>Aktionen</th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="wl in watchlists">
           <td>{{wl.id}}</td><td><a href="#/watchlist/{{wl.id}}">{{wl.name}}</a></td>
           <td>{{wl.date_added | date:'shortDate'}}</td>
-          <td>{{(wl.pl_percentage||0) | number:2}}%</td>
+          <td>
+              {{wl.change_total_percent | number:2}} %<br>
+              {{wl.change_total | number:2}}
+          </td>
+          <td>
+            {{wl.change_day_total_percent | number:2}} %<br>
+            {{wl.change_day_total | number:2}}
+          </td>
           <td>
             <button type="button" class="btn btn-default btn-xs edit">
               <span class="glyphicon glyphicon-edit"></span>

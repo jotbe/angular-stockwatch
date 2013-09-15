@@ -19,17 +19,26 @@
     <table class="table table-striped table-hover" id="watchlist">
       <thead>
         <tr>
-          <th>#</th><th>Name</th><th>Symbol</th><th>Kursveränderung</th><th>Aktionen</th>
+          <th>#</th><th>Name</th><th>Symbol</th><th>Aktueller<br>Kurs</th>
+          <th>Veränderung<br>gesamt</th><th>Veränderung<br>heute</th><th>Aktionen</th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="wi in watchlist.securities">
           <td>{{wi.id}}</td><td><a href="#/watchlist/{{watchlist.id}}/quote/{{wi.symbol}}">{{wi.name}}</a></td>
           <td>{{wi.symbol}}</td>
-          <td>{{(5||0) | number:2}}%</td>
+          <td>{{(wi.last_trade_price||0) | number:2}}</td>
+          <td>
+              {{wi.change_total_percent | number:2}} %<br>
+              {{((wi.last_trade_price||0) - wi.trade_price) | number:2}}
+          </td>
+          <td>
+            {{wi.change_percent | number:2}} %<br>
+            {{(wi.change||0) | number:2}}
+          </td>
           <td>
             <button type="button" class="btn btn-default btn-xs">
-              <span class="glyphicon glyphicon-edit"></span>
+              <span class="glyphicon glyphicon-stats"></span>
             </button>
             <button type="button" class="btn btn-default btn-xs" ng-mouseup="deleteSecurity($index)">
               <span class="glyphicon glyphicon-trash"></span>
