@@ -68,6 +68,7 @@ angular.module('stockwatchApp')
       return data;
     };
 
+    // We are requesting a certain watchlist
     if ($routeParams.watchlistId) {
       var watchlistId = $routeParams.watchlistId;
 
