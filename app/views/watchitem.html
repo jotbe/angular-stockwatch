@@ -29,11 +29,11 @@
           <td>{{wi.symbol}}</td>
           <td>{{(wi.last_trade_price||0) | number:2}}</td>
           <td>
-              {{wi.change_total_percent | number:2}} %<br>
+              {{(wi.change_total_percent||0) | number:2}} %<br>
               {{((wi.last_trade_price||0) - wi.trade_price) | number:2}}
           </td>
           <td>
-            {{wi.change_percent | number:2}} %<br>
+            {{(wi.change_percent||0) | number:2}} %<br>
             {{(wi.change||0) | number:2}}
           </td>
           <td>

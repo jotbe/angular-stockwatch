@@ -25,12 +25,12 @@
           <td>{{wl.id}}</td><td><a href="#/watchlist/{{wl.id}}">{{wl.name}}</a></td>
           <td>{{wl.date_added | date:'shortDate'}}</td>
           <td>
-              {{wl.change_total_percent | number:2}} %<br>
-              {{wl.change_total | number:2}}
+              {{(wl.change_total_percent||0) | number:2}} %<br>
+              {{(wl.change_total||0) | number:2}}
           </td>
           <td>
-            {{wl.change_day_total_percent | number:2}} %<br>
-            {{wl.change_day_total | number:2}}
+            {{(wl.change_day_total_percent||0) | number:2}} %<br>
+            {{(wl.change_day_total||0) | number:2}}
           </td>
           <td>
             <button type="button" class="btn btn-default btn-xs edit">
