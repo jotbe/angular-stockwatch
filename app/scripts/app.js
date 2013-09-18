@@ -18,7 +18,7 @@ angular.module('stockwatchApp', ['ngRoute', 'stockwatchServices', 'highcharts-ng
       .when('/quote/:symbol', {
         templateUrl: 'views/quote.html',
         controller: 'QuoteCtrl'
-      })      .otherwise({
+      }).otherwise({
         redirectTo: '/watchlist'
       });
   });
