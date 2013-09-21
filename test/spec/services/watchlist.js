@@ -29,17 +29,17 @@ describe('Service: stockwatchServices: YqlQuotes', function () {
     $httpBackend = $injector.get('$httpBackend');
 
     var quoteJSON = $injector.get('quoteJSON');
-    var queryQuoteUrl = 'http://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20yahoo.finance.quote%20WHERE%20symbol%20IN%20(%22GFT.DE%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=JSON_CALLBACK';
+    var queryQuoteUrl = 'http://query.yahooapis.com/v1/public/yql?q=USE%20https%3A%2F%2Fgist.github.com%2Fjotbe%2Fe3117bcdcbf1f3cc6c89%2Fraw%20as%20quote%3B%20SELECT%20*%20FROM%20quote%20WHERE%20symbol%20IN%20(%22GFT.DE%22)&format=json&callback=JSON_CALLBACK';
     $httpBackend.when('JSONP', queryQuoteUrl)
       .respond(quoteJSON);
 
     var histQuotesJSON = $injector.get('historicalQuotesJSON');
-    var queryHistUrl = 'http://query.yahooapis.com/v1/public/yql?q=USE%20%22https%3A%2F%2Fgist.github.com%2Fjotbe%2F3f35ceb0f3496c3e2869%2Fraw%22%20AS%20stockhist%3B%20SELECT%20*%20FROM%20stockhist%20WHERE%20symbol%20%3D%20%22GFT.DE%22%20AND%20startDate%20%3D%20%222013-01-01%22%20AND%20endDate%20%3D%20%222013-07-31%22&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=JSON_CALLBACK';
+    var queryHistUrl = 'http://query.yahooapis.com/v1/public/yql?q=USE%20%22https%3A%2F%2Fgist.github.com%2Fjotbe%2F3f35ceb0f3496c3e2869%2Fraw%22%20AS%20stockhist%3B%20SELECT%20*%20FROM%20stockhist%20WHERE%20symbol%20%3D%20%22GFT.DE%22%20AND%20startDate%20%3D%20%222013-01-01%22%20AND%20endDate%20%3D%20%222013-07-31%22&format=json&callback=JSON_CALLBACK';
     $httpBackend.when('JSONP', queryHistUrl)
       .respond(histQuotesJSON);
 
     var symbolJSON = $injector.get('symbolJSON');
-    var querySymbolUrl = 'http://query.yahooapis.com/v1/public/yql?q=USE%20%22https%3A%2F%2Fgist.github.com%2Fjotbe%2Fee2bd20184b936a5a731%2Fraw%22%20AS%20symbol%3B%20SELECT%20*%20FROM%20symbol%20WHERE%20symbol%20%3D%20%22post%22&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=JSON_CALLBACK';
+    var querySymbolUrl = 'http://query.yahooapis.com/v1/public/yql?q=USE%20%22https%3A%2F%2Fgist.github.com%2Fjotbe%2Fee2bd20184b936a5a731%2Fraw%22%20AS%20symbol%3B%20SELECT%20*%20FROM%20symbol%20WHERE%20symbol%20%3D%20%22post%22&format=json&callback=JSON_CALLBACK';
     $httpBackend.when('JSONP', querySymbolUrl)
       .respond(symbolJSON);
 

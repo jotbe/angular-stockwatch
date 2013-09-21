@@ -147,20 +147,32 @@ angular.module('stockwatchServices', ['ngResource'])
   })
   .factory('YqlQuotes', ['$q', '$http', function($q, $http) {
     var yqlQueryUrl = 'http://query.yahooapis.com/v1/public/yql?q=';
-    var yqlOptions = '&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=JSON_CALLBACK';
+    var yqlOptions = '&format=json&callback=JSON_CALLBACK';
 
     function buildQuery(yqlArray) {
       return yqlQueryUrl + encodeURIComponent(yqlArray.join(' ')) + yqlOptions;
     }
 
     function executeQuery(queryUrl, deferObj) {
+      console.log(queryUrl);
       $http.jsonp(queryUrl)
         .success(function(data) {
-          var result = data.query.results;
-          deferObj.resolve(result);
+          var result;
+
+          if(data && data.hasOwnProperty('query')) {
+            result = data.query.results;
+            deferObj.resolve(result);
+          } else {
+            result = 'No data received.';
+            console.log(result);
+            deferObj.reject(result);
+          }
+
         })
         .error(function(data, status) {
-          console.error('Error while fetching quotes: ', data, status);
+          var result = 'Error while fetching quotes.';
+          console.error(result, data, status);
+          deferObj.reject(result);
         });
     }
 
@@ -170,7 +182,8 @@ angular.module('stockwatchServices', ['ngResource'])
         var deferred = $q.defer();
 
         /***
-         *  SELECT * FROM yahoo.finance.quote
+         *  USE "https://gist.github.com/jotbe/ee2bd20184b936a5a731/raw" AS symbol;
+         *  SELECT * FROM symbol
          *  WHERE symbol = "GFT.DE";
          *
          *  REST-Query:
@@ -199,17 +212,19 @@ angular.module('stockwatchServices', ['ngResource'])
         var deferred = $q.defer();
 
         /***
-         *  SELECT * FROM yahoo.finance.quote
+         *  USE "https://gist.github.com/jotbe/e3117bcdcbf1f3cc6c89/raw" as quote;
+         *  SELECT * FROM quote
          *  WHERE symbol = "GFT.DE";
          *
          *  REST-Query:
          *  http://query.yahooapis.com/v1/public/yql?q=
-         *  SELECT%20*%20FROM%20yahoo.finance.quote%20WHERE%20symbol%20IN%20(%22GFT.DE%22)
-         *  &format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys
-         *  &callback=JSON_CALLBACK
+         *  USE%20%22https%3A%2F%2Fgist.github.com%2Fjotbe%2Fe3117bcdcbf1f3cc6c89%2Fraw%22%20AS%20quote%3B%20
+         *  SELECT%20*%20from%20quote%20WHERE%20symbol%20IN%20(%22GFT.DE%22)
+         *  &format=json&callback=JSON_CALLBACK
          */
         var yqlQuery = [
-          'SELECT * FROM yahoo.finance.quote',
+          'USE "https://gist.github.com/jotbe/e3117bcdcbf1f3cc6c89/raw" as quote;',
+          'SELECT * FROM quote',
           'WHERE symbol IN ("' + symbols + '")'
         ];
 
@@ -232,8 +247,7 @@ angular.module('stockwatchServices', ['ngResource'])
          *  USE%20'https%3A%2F%2Fgist.github.com%2Fjotbe%2F3f35ceb0f3496c3e2869%2Fraw'%20as%20stockhist%3B%20
          *  SELECT%20*%20from%20stockhist%20WHERE%20symbol%20%3D%20%22GFT.DE%22%20AND%20
          *  startDate%20%3D%20%222013-01-01%22%20AND%20endDate%20%3D%20%222013-07-31%22
-         *  &format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys
-         *  &callback=JSON_CALLBACK
+         *  &format=json&callback=JSON_CALLBACK
          */
         var yqlQuery = [
           'USE "https://gist.github.com/jotbe/3f35ceb0f3496c3e2869/raw" AS stockhist;',
