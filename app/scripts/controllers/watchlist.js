@@ -81,7 +81,6 @@ angular.module('stockwatchApp')
         })
         .then(function(data) {
           $scope.watchlist = data;
-          $scope.securities = data.securities;
         });
 
     } else {
