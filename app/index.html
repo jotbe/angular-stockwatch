@@ -55,7 +55,7 @@
                     <input type="text" autocomplete="off" class="form-control" placeholder="Wertpapier" ng-model="searchString" id="search">
                   </div>
                   <button type="submit" class="btn btn-default">Suchen</button>
-                  <div id="searchResult" ng-hide="noSearchResult">
+                  <div id="searchResult" ng-show="searchResult">
                     <ul class="nav nav-pills nav-stacked" role="presentation">
                       <li role="presentation" class="dropdown-header">Anzahl: {{searchResult.length}}</li>
                       <li role="presentation" ng-repeat="res in searchResult"><a ng-href="#/quote/{{res.symbol}}" role="menuitem"><span class="label label-info">{{res.type}}</span> {{res.name}} ({{res.symbol}}, {{res.exchange}})</a></li>
