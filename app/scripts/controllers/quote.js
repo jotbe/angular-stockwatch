@@ -6,7 +6,9 @@ angular.module('stockwatchApp')
     // Storage initialization
     var storage = WatchlistStorage.open();
     storage.then(function() {
-      $scope.targetWatchlists = WatchlistStorage.getItems();
+      WatchlistStorage.getItems().then(function(data) {
+        $scope.targetWatchlists = data;
+      });
     });
 
     var symbol = $routeParams.symbol;
