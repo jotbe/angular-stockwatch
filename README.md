@@ -1,10 +1,10 @@
-# README zur Stockwatch Anwendung
+# README zur Stockwatch-Anwendung
 
 Autor: Jan Beilicke <dev@jotbe-fx.de>
 
-## Mögliche Fehlerquellen {{Kann auch nach Github in eine README-Datei ausgelagert werden}}
+## Mögliche Fehlerquellen
 
-Tests mit `$ grunt test` ausführen. Beim ersten Aufruf kann dies je nach Karma-Version mit Fehlern quittiert werden:
+Tests lassen sich mit `$ grunt test` ausführen. Beim ersten Aufruf kann der Befehl je nach Karma-Version mit Fehlern quittiert werden:
 
     ...
     Running "karma:unit" (karma) task
@@ -21,9 +21,9 @@ Tests mit `$ grunt test` ausführen. Beim ersten Aufruf kann dies je nach Karma-
         });
       };
 
-Hier löscht man als Workaround die Datei `karma.conf.js` und generiert eine aktuelle, passend zu jeweiligen Karma-Version. Es ist darauf zu achten, die Angular-Komponenten `app/bower_components/angular/angular.js`, `app/bower_components/angular-mocks/angular-mocks.js` sowie weitere abhängige Quellen mit anzugeben. Falls man in einem zu testenden Modul eine Abhängigkeit angegeben hat, beispielsweise `angular.module('stockwatchApp', ['ui'])`, so muss man in der `karma.conf.js` auf jeden Fall den Pfad zur Angular-UI JavaScript-Datei (`ui`) angeben. Nach dem Speichern der Änderungen muss man eine etwaig laufende Karma-Instanz neustarten, damit die geänderte Konfiguration berücksichtigt wird.
+Hier löscht man als Workaround die Datei `karma.conf.js` und generiert eine aktuelle, passend zur jeweiligen Karma-Version. Es ist darauf zu achten, die Angular-Komponenten `app/bower_components/angular/angular.js`, `app/bower_components/angular-mocks/angular-mocks.js` sowie weitere abhängige Quellen mit anzugeben. Falls man in einem zu testenden Modul eine Abhängigkeit eingetragen hat, beispielsweise `angular.module('stockwatchApp', ['ui'])`, muss man in der Datei `karma.conf.js` auf jeden Fall den Pfad zur JavaScript-Datei der Angular-UI(`ui`) angeben. Nach dem Speichern der Änderungen sind bereits laufende Karma-Instanzen neuzustarten, damit die geänderte Konfiguration Berücksichtigung findet.
 
-Für die E2E-Konfiguration speichert man die neu erstellte `karma.conf.js` unter dem Namen `karma-e2e.conf.js` und passt diese leicht an:
+Für die E2E-Konfiguration speichert man die neu generierte `karma.conf.js` unter dem Namen `karma-e2e.conf.js` und passt sie leicht an:
 
     frameworks: ['ng-scenario'],
     port: 9877,
@@ -39,9 +39,9 @@ Für die E2E-Konfiguration speichert man die neu erstellte `karma.conf.js` unter
       'test/e2e/*.js'
     ],
 
-Das Verzeichnis `test/e2e/` legt man an und legt dort sämtliche E2E-Tests ab.
+Nach dem Erstellen des Verzeichnises `test/e2e/` legt man dort sämtliche E2E-Tests ab.
 
-Man erhält eine Fehlermeldung, sollte man `grunt test` aufrufen während bereits `grunt server` läuft:
+Läuft beim Aufruf von `grunt test` bereits ein `grunt server`, erscheint ebenfalls eine Fehlermeldung:
 
     $ grunt test
     Running "clean:server" (clean) task
@@ -57,7 +57,7 @@ Man erhält eine Fehlermeldung, sollte man `grunt test` aufrufen während bereit
     Running "connect:test" (connect) task
     Fatal error: Port 9000 is already in use by another process.
 
-Will man beide parallel betreiben, muss in der `Gruntfile.js` der `config.test.options.port` mit dem Wert `9001` hinzugefügt werden.
+Will man beide parallel betreiben, ist `Gruntfile.js` der `config.test.options.port` mit dem Wert `9001` hinzuzufügen.
 
 Zugriff von außen ist möglich, wenn man den Grunt-Server nicht an `localhost` bindet, sondern an einen Hostnamen, der im lokalen Netzwerk erreichbar ist, die IP-Adresse `0.0.0.0` oder eine feste. Hierbei sollte man immer mögliche Sicherheitsprobleme bedenken.
 
@@ -68,6 +68,6 @@ Weitere Fehlermeldungen können beim Ausführen von `$ grunt server` auftreten:
     Running "watch" task
     Waiting...Fatal error: Port 35729 is already in use by another process.
 
-In diesem Fall hat man vermutlich in seiner IDE ein Live-Reload-Plugin laufen, das standardmäßig den Port 35729 verwendet. Grunt achtet auf Veränderungen in den Projektdateien und lädt bei Bedarf automatisch die Umgebung neu. Hier hilft es, im `Gruntfile` den `LIVE_RELOAD_PORT` zu ändern, beispielsweise auf Port 35728.
+In diesem Fall hat man vermutlich in seiner IDE ein Live-Reload-Plug-in laufen, das standardmäßig den Port 35729 verwendet. Grunt achtet auf Veränderungen in den Projektdateien und lädt bei Bedarf automatisch die Umgebung neu. Hier hilft es, im `Gruntfile` den `LIVE_RELOAD_PORT` zu ändern, beispielsweise auf Port 35728.
 
-Zuletzt wirft `grunt server` eventuell den Ausnahmefehler `Error: watch ENOSPC`. Dies bedeutet meist, dass die Anzahl der zu beobachtenden Dateien überschritten wurde. Erhöhen lässt sich das Limit in der VM mit dem Befehl `echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf`.
+Zuletzt wirft `grunt server` eventuell den Ausnahmefehler `Error: watch ENOSPC`. Das bedeutet meist, dass die Anzahl der zu beobachtenden Dateien überschritten wurde. Erhöhen lässt sich das Limit in der VM mit dem Befehl `echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf`.
