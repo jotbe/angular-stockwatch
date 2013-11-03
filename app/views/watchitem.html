@@ -37,9 +37,9 @@
             {{(wi.change||0) | number:2}}
           </td>
           <td>
-            <button type="button" class="btn btn-default btn-xs">
+            <a href="#/watchlist/{{watchlist.id}}/quote/{{wi.symbol}}" role="button" class="btn btn-default btn-xs">
               <span class="glyphicon glyphicon-stats"></span>
-            </button>
+            </a>
             <button type="button" class="btn btn-default btn-xs" ng-mouseup="deleteSecurity($index)">
               <span class="glyphicon glyphicon-trash"></span>
             </button>
