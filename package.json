@@ -1,5 +1,5 @@
 {
-  "name": "stockwatch",
+  "name": "angular-stockwatch",
   "version": "0.1.0",
   "dependencies": {
     "grunt-karma": "~0.6.2"
