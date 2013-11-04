@@ -119,7 +119,10 @@ angular.module('stockwatchApp')
             });
           })
           .then(function() {
-            $scope.watchlists = WatchlistStorage.getItems();
+            return WatchlistStorage.getItems();
+          })
+          .then(function(items) {
+            $scope.watchlists = items;
           });
 
         this.watchlistName = '';
@@ -131,9 +134,12 @@ angular.module('stockwatchApp')
 
       storage
         .then(function() {
-          return WatchlistStorage.deleteItem(id).then(function() {
-            $scope.watchlists = WatchlistStorage.getItems();
-          });
+          return WatchlistStorage.deleteItem(id);
+        })
+        .then(function() {
+          return WatchlistStorage.getItems();
+        }).then(function(items) {
+          $scope.watchlists = items;
         });
     };
 
