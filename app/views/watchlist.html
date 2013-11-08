@@ -33,7 +33,7 @@
             {{(wl.change_day_total||0) | number:2}}
           </td>
           <td>
-            <button type="button" class="btn btn-default btn-xs delete" ng-mouseup="deleteWatchlist({{wl.id}})">
+            <button type="button" class="btn btn-default btn-xs delete" ng-mouseup="deleteWatchlist(wl.id)">
               <span class="glyphicon glyphicon-trash"></span>
             </button>
           </td>
