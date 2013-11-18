@@ -149,6 +149,23 @@ angular.module('stockwatchServices', ['ngResource'])
     var yqlQueryUrl = 'http://query.yahooapis.com/v1/public/yql?q=';
     var yqlOptions = '&format=json&callback=JSON_CALLBACK';
 
+    function sanitizeString(str) {
+      return str.replace(/[^\w\s.-]+/gi, '').replace(/\s+/g, '+');
+    }
+
+    function sanitizeUsDate(str) {
+      var res = '0000-00-00';
+      var isValidUsDate = false;
+
+      str = str.replace(/[^\d-]+/gi, '');
+      isValidUsDate = /\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])/.test(str);
+
+      if (isValidUsDate === true) {
+        res = str;
+      }
+      return res;
+    }
+
     function buildQuery(yqlArray) {
       return yqlQueryUrl + encodeURIComponent(yqlArray.join(' ')) + yqlOptions;
     }
@@ -194,7 +211,7 @@ angular.module('stockwatchServices', ['ngResource'])
          */
         var yqlQuery = [
           'USE "https://gist.github.com/jotbe/ee2bd20184b936a5a731/raw" AS symbol;',
-          'SELECT * FROM symbol WHERE symbol = "' + str + '"'
+          'SELECT * FROM symbol WHERE symbol = "' + sanitizeString(str) + '"'
         ];
 
         var query = buildQuery(yqlQuery);
@@ -208,6 +225,9 @@ angular.module('stockwatchServices', ['ngResource'])
         if (typeof(syms) === 'string') {
           syms = [syms];
         }
+
+        syms = syms.map(sanitizeString);
+
         var symbols = syms.join('","');
         var deferred = $q.defer();
 
@@ -252,9 +272,9 @@ angular.module('stockwatchServices', ['ngResource'])
         var yqlQuery = [
           'USE "https://gist.github.com/jotbe/3f35ceb0f3496c3e2869/raw" AS stockhist;',
           'SELECT * FROM stockhist',
-          'WHERE symbol = "' + sym + '"',
-          'AND startDate = "' + fromDate + '"',
-          'AND endDate = "' + toDate + '"'
+          'WHERE symbol = "' + sanitizeString(sym) + '"',
+          'AND startDate = "' + sanitizeUsDate(fromDate) + '"',
+          'AND endDate = "' + sanitizeUsDate(toDate) + '"'
         ];
 
         var query = buildQuery(yqlQuery);
