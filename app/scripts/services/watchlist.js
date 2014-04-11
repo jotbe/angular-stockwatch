@@ -146,7 +146,8 @@ angular.module('stockwatchServices', ['ngResource'])
     };
   })
   .factory('YqlQuotes', ['$q', '$http', function($q, $http) {
-    var yqlQueryUrl = 'http://query.yahooapis.com/v1/public/yql?q=';
+    var protocol = window.location.protocol;
+    var yqlQueryUrl = protocol + '//query.yahooapis.com/v1/public/yql?q=';
     var yqlOptions = '&format=json&callback=JSON_CALLBACK';
 
     function sanitizeString(str) {
