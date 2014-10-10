@@ -200,23 +200,22 @@ angular.module('stockwatchServices', ['ngResource'])
         var deferred = $q.defer();
 
         /***
-         *  USE "https://gist.github.com/jotbe/ee2bd20184b936a5a731/raw" AS symbol;
+         *  USE "https://gist.githubusercontent.com/jotbe/3737ffeec4197239af1e/raw" AS symbol;
          *  SELECT * FROM symbol
          *  WHERE symbol = "GFT.DE";
          *
          *  REST-Query:
          *  http://query.yahooapis.com/v1/public/yql?q=
-         *  USE%20%22https%3A%2F%2Fgist.github.com%2Fjotbe%2Fee2bd20184b936a5a731%2Fraw%22%20AS%20symbol%3B%20
-         *  SELECT%20*%20FROM%20symbol%20WHERE%20symbol%20%3D%20%22post%22
+         *  USE%20%22https%3A%2F%2Fgist.githubusercontent.com%2Fjotbe%2F3737ffeec4197239af1e%2Fraw
+         *  %22%20AS%20symbol%3B%20SELECT%20*%20FROM%20symbol%20WHERE%20symbol%20%3D%20%22gft%22
          *  &format=json&callback=JSON_CALLBACK
          */
         var yqlQuery = [
-          'USE "https://gist.github.com/jotbe/ee2bd20184b936a5a731/raw" AS symbol;',
+          'USE "https://gist.githubusercontent.com/jotbe/3737ffeec4197239af1e/raw" AS symbol;',
           'SELECT * FROM symbol WHERE symbol = "' + sanitizeString(str) + '"'
         ];
 
         var query = buildQuery(yqlQuery);
-        // console.log('Executing Query:', query);
         executeQuery(query, deferred);
 
         return deferred.promise;
