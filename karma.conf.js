@@ -19,7 +19,7 @@ module.exports = function(config) {
       'app/bower_components/angular-mocks/angular-*.js',
       'app/bower_components/angular-resource/angular-*.js',
       'app/bower_components/idbwrapper/idbstore.js',
-      'app/bower_components/highcharts-ng/src/directives/highcharts-ng.js',
+      'app/bower_components/highcharts-ng/src/highcharts-ng.js',
       'app/scripts/*.js',
       'app/scripts/**/*.js',
       'test/mock/**/*.js',

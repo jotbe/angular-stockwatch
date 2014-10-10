@@ -14,13 +14,6 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'app/bower_components/angular/angular.js',
-      'app/bower_components/angular-route/angular-*.js',
-      'app/bower_components/angular-mocks/angular-*.js',
-      'app/bower_components/angular-resource/angular-*.js',
-      'app/bower_components/highcharts-ng/src/directives/highcharts-ng.js',
-      'app/scripts/*.js',
-      'app/scripts/**/*.js',
       'test/e2e/*.js'
     ],
 

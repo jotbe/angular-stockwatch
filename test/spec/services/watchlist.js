@@ -29,7 +29,7 @@ describe('Service: stockwatchServices: YqlQuotes', function () {
     $httpBackend = $injector.get('$httpBackend');
 
     var quoteJSON = $injector.get('quoteJSON');
-    var queryQuoteUrl = 'http://query.yahooapis.com/v1/public/yql?q=USE%20https%3A%2F%2Fgist.github.com%2Fjotbe%2Fe3117bcdcbf1f3cc6c89%2Fraw%20as%20quote%3B%20SELECT%20*%20FROM%20quote%20WHERE%20symbol%20IN%20(%22GFT.DE%22)&format=json&callback=JSON_CALLBACK';
+    var queryQuoteUrl = 'http://query.yahooapis.com/v1/public/yql?q=USE%20%22https%3A%2F%2Fgist.github.com%2Fjotbe%2Fe3117bcdcbf1f3cc6c89%2Fraw%22%20as%20quote%3B%20SELECT%20*%20FROM%20quote%20WHERE%20symbol%20IN%20(%22GFT.DE%22)&format=json&callback=JSON_CALLBACK';
     $httpBackend.when('JSONP', queryQuoteUrl)
       .respond(quoteJSON);
 
@@ -39,7 +39,7 @@ describe('Service: stockwatchServices: YqlQuotes', function () {
       .respond(histQuotesJSON);
 
     var symbolJSON = $injector.get('symbolJSON');
-    var querySymbolUrl = 'http://query.yahooapis.com/v1/public/yql?q=USE%20%22https%3A%2F%2Fgist.github.com%2Fjotbe%2Fee2bd20184b936a5a731%2Fraw%22%20AS%20symbol%3B%20SELECT%20*%20FROM%20symbol%20WHERE%20symbol%20%3D%20%22post%22&format=json&callback=JSON_CALLBACK';
+    var querySymbolUrl = 'http://query.yahooapis.com/v1/public/yql?q=USE%20%22https%3A%2F%2Fgist.githubusercontent.com%2Fjotbe%2F3737ffeec4197239af1e%2Fraw%22%20AS%20symbol%3B%20SELECT%20*%20FROM%20symbol%20WHERE%20symbol%20%3D%20%22post%22&format=json&callback=JSON_CALLBACK';
     $httpBackend.when('JSONP', querySymbolUrl)
       .respond(symbolJSON);
 
@@ -47,17 +47,6 @@ describe('Service: stockwatchServices: YqlQuotes', function () {
 
   it('should request a quote passed as a string', inject(function ($rootScope, YqlQuotes) {
     var promise = YqlQuotes.getQuotes('GFT.DE');
-    var res;
-    $httpBackend.flush();
-    promise.then(function(data) {
-      res = data.quote;
-    });
-    $rootScope.$apply();
-    expect(res.symbol).toEqual('GFT.DE');
-  }));
-
-  it('should request a quote passed as an array', inject(function ($rootScope, YqlQuotes) {
-    var promise = YqlQuotes.getQuotes(['GFT.DE']);
     var res;
     $httpBackend.flush();
     promise.then(function(data) {
