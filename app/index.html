@@ -6,7 +6,8 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>{{ Page.appTitle() + Page.title() }}</title>
+    <title ng-if="Page.title()">{{ Page.appTitle() + "/" + Page.title() }}</title>
+    <title ng-if-not="Page.title()">{{ Page.appTitle() }}</title>
     <meta name="description" content="Aktienkurse verfolgen mit AngularJS">
     <meta name="author" content="Jan Beilicke">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

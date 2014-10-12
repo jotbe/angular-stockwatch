@@ -8,7 +8,7 @@ angular.module('stockwatchApp')
     ['$scope', '$routeParams', 'YqlQuotes', 'WatchlistStorage', 'Page', function (
       $scope, $routeParams, YqlQuotes, WatchlistStorage, Page) {
 
-    Page.setTitle('');
+    Page.setTitle('Watchlists');
 
     var storage = WatchlistStorage.open();
 
@@ -89,7 +89,7 @@ angular.module('stockwatchApp')
         })
         .then(function(data) {
           if ('name' in data) {
-            Page.setTitle('/' + data.name);
+            Page.setTitle(data.name);
           }
           $scope.watchlist = data;
         });
