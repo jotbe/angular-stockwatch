@@ -1,7 +1,15 @@
 'use strict';
 
 angular.module('stockwatchApp')
-  .controller('WatchlistCtrl', ['$scope', '$routeParams', 'YqlQuotes', 'WatchlistStorage', function ($scope, $routeParams, YqlQuotes, WatchlistStorage) {
+  .controller('MainCtrl', ['$scope', 'Page', function($scope, Page) {
+    $scope.Page = Page;
+  }])
+  .controller('WatchlistCtrl',
+    ['$scope', '$routeParams', 'YqlQuotes', 'WatchlistStorage', 'Page', function (
+      $scope, $routeParams, YqlQuotes, WatchlistStorage, Page) {
+
+    Page.setTitle('');
+
     var storage = WatchlistStorage.open();
 
     // Requests quote information for the securities and updates them.
@@ -80,11 +88,15 @@ angular.module('stockwatchApp')
           return updateSecurities(data);
         })
         .then(function(data) {
+          if ('name' in data) {
+            Page.setTitle('/' + data.name);
+          }
           $scope.watchlist = data;
         });
 
     } else {
       // default
+      $scope.watchlists = [];
       storage.then(function() {
         return WatchlistStorage.getItems();
       })
@@ -95,7 +107,7 @@ angular.module('stockwatchApp')
           watchlists[i] = updateSecurities(watchlists[i]);
         }
 
-        console.log("Updated watchlists:", watchlists);
+        console.log('Updated watchlists:', watchlists);
         $scope.watchlists = watchlists;
       });
     }

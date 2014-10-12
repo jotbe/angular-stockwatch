@@ -1,6 +1,21 @@
 'use strict';
 
 angular.module('stockwatchServices', ['ngResource'])
+  .factory('Page', function() {
+    var appTitle = 'jbStockwatch';
+    var title = '';
+    return {
+      appTitle: function() {
+        return appTitle;
+      },
+      title: function() {
+        return title;
+      },
+      setTitle: function(t) {
+        title = t;
+      }
+    };
+  })
   .factory('Watchlist', ['$resource', function($resource) {
     // Public API here
     return $resource('data/watchlists.json', {}, {
